@@ -1,0 +1,40 @@
+{
+    "mq": {
+        "name_server": "127.0.0.1:9876",
+        "access_key": "",
+        "secret_key": "",
+        "group_name": "notification_consumer_group"
+    },
+    "notifications": [
+        {
+            "event_type": "registration",
+            "queue_name": "registration_queue",
+            "http_method": "POST",
+            "http_url": "https://httpbin.org/post",
+            "headers": {
+                "Content-Type": "application/json",
+                "X-Api-Key": "secret-key"
+            },
+            "body": {
+                "event": "user_registered",
+                "user_id": "{$.event.user_id}",
+                "email": "{$.event.email}",
+                "timestamp": "{$.event.timestamp}"
+            }
+        },
+        {
+            "event_type": "payment",
+            "queue_name": "payment_queue",
+            "http_method": "POST",
+            "http_url": "https://httpbin.org/post",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "amount": "{$.event.amount}",
+                "currency": "{$.event.currency}",
+                "status": "paid"
+            }
+        }
+    ]
+}

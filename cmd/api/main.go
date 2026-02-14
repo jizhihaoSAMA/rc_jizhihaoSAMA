@@ -54,7 +54,7 @@ func main() {
 	<-stop
 
 	log.Println("Shutting down API Server...")
-	
+
 	shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer shutdownCancel()
 	if err := server.Shutdown(shutdownCtx); err != nil {
@@ -89,14 +89,14 @@ func handleEventIngestion(w http.ResponseWriter, r *http.Request, producer rocke
 		return
 	}
 	topic := notifyConfig.QueueName
-	
+
 	// Ensure timestamp is set
 	if evt.Timestamp.IsZero() {
 		evt.Timestamp = time.Now()
 	}
 
 	body, _ := json.Marshal(evt)
-	
+
 	if err := mq.SendMessage(context.Background(), producer, topic, body); err != nil {
 		log.Printf("Failed to send message: %v", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)

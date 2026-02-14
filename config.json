@@ -3,7 +3,8 @@
         "name_server": "127.0.0.1:9876",
         "access_key": "",
         "secret_key": "",
-        "group_name": "notification_consumer_group"
+        "group_name": "notification_consumer_group",
+        "max_retries": 16
     },
     "notifications": [
         {
